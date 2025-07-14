@@ -1,0 +1,655 @@
+
+    :root {
+      --primary: #0c0e1a;
+      --accent: #00f7ff;
+      --bg: rgb(1, 18, 71);
+      --card: #111827;
+      --text: #d1d5db;
+      --muted: #64748b;
+      --glass: rgba(255, 255, 255, 0.05);
+      --overlay: rgba(0, 10, 40, 0.364);
+      --white: #ffffff;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      
+      background-color: #000000;
+      color: var(--text);
+      line-height: 1.6;
+    }
+section.hero {
+  position: relative;
+  height: 100vh;
+  text-align: center;
+  color: var(--accent);
+  overflow: hidden;
+}
+
+section.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--overlay, rgba(0, 0, 0, 0.6));
+  z-index: 1;
+}
+
+section.hero img.bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  width: 99.4%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+
+}
+
+.hero .content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+.hero .child1 {
+  margin-top: 10px; /* 80px default + 4px push */
+}
+
+.hero .child2 {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: auto;
+  padding: 40px 20px;
+  flex-wrap: wrap;
+}
+
+.hero .info-card {
+  background-color: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 15px;
+  padding: 8px 25px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  min-width: 140px;
+}
+
+.hero .info-card:hover {
+  transform: translateY(-5px);
+}
+
+.hero .number {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--accent, #00f7ff);
+}
+
+.hero .label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin-top: 2px;
+}
+
+@media (max-width: 768px) {
+  .hero .child1 {
+    margin-top: 40px;
+  }
+
+  .hero .child2 {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 10px;
+  }
+
+  .hero .info-card {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .hero .number {
+    font-size: 2.5rem;
+  }
+
+  .hero .label {
+    font-size: 1rem;
+  }
+}
+
+
+    .hero h1 {
+    padding-top: 8rem;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-shadow: 0 0 10px var(--white);
+    }
+    .hero p {
+      max-width: 700px;
+      margin: 0.5rem auto 0;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+
+
+    section.section_1 {
+    
+      position: relative;
+      height: 130vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+         background:linear-gradient(rgba(3, 13, 53, 0.859),rgb(255, 255, 255),rgb(255, 255, 255));
+      color: var(--card
+      );
+      overflow: hidden;
+    }
+
+section.section_1 .button{
+    margin-top: 5rem;
+}
+
+section.section_1 a {
+    font-family: 'Orbitron', sans-serif;
+    color: aliceblue;
+    background-color: #ffffff;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 10px ;
+    font-weight: 800;
+    transition: 0.3s ease;
+/*box around nav*/
+    padding: 8px 40px;
+    border-radius: 3px;
+    border: 2px solid rgb(0, 0, 0);
+    box-shadow: 2px 2px 10px #011423;
+}
+
+section.section_1 h1 {
+    font-family: 'Orbitron', sans-serif;
+}
+
+section.section_1 a:hover {
+    background-color: #000000a9;
+    color: #cde4f8;
+}
+
+
+
+
+
+      section.section_2 {
+      position: relative;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      background: var(--primary);
+      color: var(--white);
+      overflow: hidden;
+    }
+
+      section.section_2 h1 {
+      color: var(--white);
+      text-shadow: 0 0 10px var(--primary);
+    }
+
+    section.section_2 p {
+     
+     border-radius: 10px;
+      color:var(--primary);
+      text-shadow: 0 0 10px var(--primary);
+      font-size: 18px;
+      font-weight: 600;
+    
+   }
+    section.section_2 img.bg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 99.4%; height: 100%;
+      object-fit: cover;
+      opacity: 1;
+      z-index: 0;
+    }
+    .section_2 .content {
+      position: relative;
+      margin-left: 10rem;
+      z-index: 2;
+      padding: 0 20px;
+      
+    }
+
+    section.section_2 .button{
+    margin-top: 3rem;
+}
+
+section.section_2 a {
+    font-family: 'Orbitron', sans-serif;
+    color: aliceblue;
+    background-color: #000000;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 10px ;
+    font-weight: 800;
+    transition: 0.3s ease;
+/*box around nav*/
+    padding: 8px 40px;
+    border-radius: 3px;
+    border: 2px solid rgb(255, 255, 255);
+    box-shadow: 2px 2px 10px #011423;
+}
+
+section.section_2 a:hover {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid rgb(0, 0, 0);
+}
+
+    section.section_2::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+            background:linear-gradient(rgba(2, 18, 72, 0));
+      z-index: 1;
+    }
+
+
+
+
+
+    section.section_3 {
+  position: relative;
+  height: 160vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: black;
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+section.section_3 .text-block {
+    display: flex;
+  max-width: 800px;
+  margin-bottom: 2rem;
+}
+
+section.section_3  h1 {
+        font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: 'Georgia', serif;
+  margin-bottom: 1rem;
+}
+section.section_3  p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+section.section_3 .image-container {
+  width: 100%;
+  max-width: 1000px;
+  height: 400px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin: 2rem 0;
+  position: relative;
+}
+
+section.section_3 .image-container img.animated-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* forces the image to fill and crop */
+  object-position: center;
+  display: block;
+}
+
+
+section.section_3 .features {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 2rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+section.section_3 .feature {
+  flex: 1;
+  min-width: 200px;
+}
+
+section.section_3 .feature h4 {
+   font-family: 'Orbitron', sans-serif;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+section.section_3 .feature p {
+  font-size: 0.8rem;
+}
+
+section.section_3 .feature {
+  flex: 1;
+  min-width: 200px;
+  cursor: pointer; /* 👈 shows it's clickable */
+  border: 1px solid transparent;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  border-radius: 10px;
+}
+
+section.section_3 .feature:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid #00f7ff;
+  transform: scale(1.03);
+}
+
+section.section_3 .feature.active {
+  border: 1px solid #00f7ff;
+  background-color: rgba(0, 247, 255, 0.1);
+  box-shadow: 0 0 10px rgba(0, 247, 255, 0.2);
+  transform: scale(1.05);
+}
+
+
+.animated-image {
+  transition: opacity 0.8s ease-in-out;
+  opacity: 1;
+}
+
+.animated-image.fade-out {
+  opacity: 0;
+}
+
+
+    section.section_4 {
+      position: relative;
+      height: 130vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background:linear-gradient(rgb(0, 0, 1),rgba(0, 6, 23, 0.815));
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    section.section_4 .button{
+    margin-top: 3rem;
+}
+
+
+    section.section_4 a {
+    font-family: 'Orbitron', sans-serif;
+    color: rgb(255, 255, 255);
+    background-color: #000000;
+    text-transform:capitalize;
+    text-decoration: none;
+    font-size: 13px ;
+    font-weight: 800;
+    transition: 0.3s ease;
+/*box around nav*/
+    padding: 16px 80px;
+    border-radius: 3px;
+    border: 3px solid rgb(255, 255, 255);
+    box-shadow: 2px 2px 10px #011423;
+}
+
+section.section_4 h1 {
+    font-family: 'Orbitron', sans-serif;
+}
+
+section.section_4 a:hover {
+    background-color: #ffffff;
+    color: #000000;
+    border: 3px solid rgb(202, 202, 202);
+}
+
+
+
+
+
+/* Cards container */
+.opportunities-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 10px 0 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Each card */
+.opportunity-card {
+  position: relative;
+  flex: 1 1 33.33%;
+  height: 100vh;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Card background image */
+.opportunity-card .bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Card overlay layer */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.overlay:hover{
+  background-color: rgba(0, 0, 0, 0.422);
+  transition: background-color 0.3s ease;
+}
+
+/* Overlay content */
+.overlay .content {
+  color: #fff;
+  z-index: 3;
+}
+
+.overlay h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.overlay p {
+  font-size: 16px;
+}
+
+.read-more {
+  color: #00aced;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+
+/* ======================
+   FULLSCREEN OVERLAY
+   ====================== */
+
+.fullscreen-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+
+.fullscreen-overlay.active {
+  display: flex;
+}
+
+/* Inner content with background image */
+.overlay-inner {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* Optional dark overlay on the image */
+.overlay-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+}
+
+/* Overlay visible text */
+.overlay-text {
+  position: relative;
+  max-width: 700px;
+  text-align: center;
+  color: white;
+  z-index: 2;
+}
+
+.overlay-text h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.overlay-text p {
+  font-size: 18px;
+}
+
+/* Hidden extended content */
+.more-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.more-content.active {
+  max-height: 300px;
+  opacity: 1;
+  margin-top: 15px;
+}
+
+/* Button to reveal content */
+.expand-btn {
+  background: none;
+  border: 1px solid #fff;
+  color: white;
+  padding: 8px 16px;
+  margin-top: 15px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.expand-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  font-size: 40px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  z-index: 3;
+}
+
+/* ======================
+   ANIMATIONS
+   ====================== */
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.9); opacity: 0 }
+  to { transform: scale(1); opacity: 1 }
+}
+
+/* ======================
+   RESPONSIVE
+   ====================== */
+
+@media (max-width: 992px) {
+  .opportunity-card {
+    flex: 1 1 50%;
+    height: 60vh;
+  }
+
+  .overlay-text h2 {
+    font-size: 26px;
+  }
+
+  .overlay-text p,
+  .expand-btn {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .opportunity-card {
+    flex: 1 1 100%;
+    height: 50vh;
+  }
+
+  .overlay-text h2 {
+    font-size: 22px;
+  }
+
+  .overlay-text p,
+  .expand-btn {
+    font-size: 14px;
+  }
+}
