@@ -6,16 +6,14 @@
  <div class="wrapper">
   <nav id="sidebar" class="sidebar d-flex flex-column collapsed">
     <div class="d-flex justify-content-between align-items-center text-white px-3 py-2 border-bottom">
-      <span class="nav-label fw-bold">Dashboard</span>
+      <span class="nav-label fw-bold">Admin</span>
       <button id="toggleSidebar" class="btn btn-sm btn-outline-light"><i class="fas fa-bars"></i></button>
     </div>
     
 
 
     <ul class="nav flex-column mt-2" id="sidebarMenu">
-      <div class="profile-container">
-          <img src="{{ $user->profile_picture ? asset('/public/storage/' . $user->profile_picture) : asset('uploads/pics/default.png') }}" alt="Profile">
-      </div>
+
             
     </ul>
 
@@ -39,10 +37,9 @@
     <div class="topbar">
       <button id="toggleTheme" class="btn btn-sm btn-secondary">Dark Mode</button>
     </div>
-    <iframe id="contentFrame" src="{{ route('user.finance.index') }}"></iframe>
+    <iframe id="contentFrame" src="{{ route('loading_count_down') }}"></iframe>
   </div>
 </div>
-
 <script src="{{ asset('/public/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script>
   const sidebar = document.getElementById("sidebar");
@@ -88,6 +85,26 @@ toggleTheme.addEventListener("click", () => {
     tooltipTriggerList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
   }
 
+function renderItems(items) {
+  return items.map(item => {
+    if (item.children) {
+      const submenuId = item.label.replace(/\s+/g, '') + "SubMenu";
+      return `
+        <li>
+          <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#${submenuId}" role="button">
+            <div>${item.label}</div><i class="fas fa-angle-down"></i>
+          </a>
+          <ul class="collapse nested-submenu list-unstyled ps-3" id="${submenuId}">
+            ${renderItems(item.children)}
+          </ul>
+        </li>
+      `;
+    } else {
+      return `<li><a onclick="selectItem(this, '${item.url}')" class="nav-link">${item.label}</a></li>`;
+    }
+  }).join('');
+}
+
 function createDropdown(title, icon, items) {
   const menuId = title.replace(/\s+/g, '') + "Menu";
   const li = document.createElement('li');
@@ -101,22 +118,11 @@ function createDropdown(title, icon, items) {
       <i class="fas fa-chevron-down nav-label"></i>
     </a>
     <ul class="collapse submenu list-unstyled" id="${menuId}">
-      ${items.map(item =>
-        item.children ?
-          `<li data-bs-toggle="tooltip" title="${title}" >
-            <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#${item.label.replace(/\s+/g, '')}SubMenu" role="button">
-              <div>${item.label}</div><i class="fas fa-angle-down"></i>
-            </a>
-            <ul class="collapse nested-submenu list-unstyled" id="${item.label.replace(/\s+/g, '')}SubMenu">
-              ${item.children.map(sub => `<li><a onclick="selectItem(this, '${sub.url}')" class="nav-link">${sub.label}</a></li>`).join('')}
-            </ul>
-          </li>` :
-          `<li><a onclick="selectItem(this, '${item.url}')" class="nav-link">${item.label}</a></li>`
-      ).join('')}
+      ${renderItems(items)}
     </ul>
   `;
 
-  // Add event listener to collapse others when this one is opened
+  // Collapse logic
   setTimeout(() => {
     const trigger = li.querySelector(`[href="#${menuId}"]`);
     const targetMenu = li.querySelector(`#${menuId}`);
@@ -139,39 +145,13 @@ function createDropdown(title, icon, items) {
 
 
 
+
   
 
-  menu.appendChild(createDropdown('Profile', 'fas fa-user', [
-    { label: 'View Profile', url: 'profile/account' },
-  ]));
 
 
 
 
-
-
-menu.appendChild(createDropdown('Finance', 'fas fa-coins', [
-  { label: 'Overview', url: 'finance/' },
-  { label: 'Payments', url: 'finance/payments/' },
-  { label: 'Create General Payment', url: 'finance/payments/general/create' },
-  { label: 'Invoices', url: 'finance/invoices/' },
-  { label: 'Expenses', url: 'finance/expenses/' },
-  { label: 'Budget', url: 'finance/budgets/' },
-
-
-      {
-      label: 'Analytics',
-      children: [
-        { label: 'Reports', url: 'finance/reports/' }
-      ]
-    }
-
-]));
-
-
-  menu.appendChild(createDropdown('Subscriptions', 'fas fa-box-open', [
-  { label: 'All Subscriptions', url: 'finance/subscription' }
-]));
 
 
   enableTooltips();

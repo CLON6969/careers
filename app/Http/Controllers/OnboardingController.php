@@ -110,37 +110,49 @@ class OnboardingController extends Controller
 
         return redirect()->route('onboarding.step4');
     }
+public function step4()
+{
+    $user = Auth::user();
+    // Get all certifications for the user
+    $certifications = ApplicantCertification::where('user_id', $user->id)->get();
 
-    public function step4()
-    {
-        $user = Auth::user();
-        $certification = ApplicantCertification::where('user_id', $user->id)->latest()->first();
+    return view('onboarding.step4', compact('certifications'))
+        ->with(['step' => 4, 'progress' => 64]);
+}
 
-        return view('onboarding.step4', compact('certification'))
-            ->with(['step' => 4, 'progress' => 64]);
+public function postStep4(Request $request)
+{
+    $data = $request->validate([
+        'certifications' => 'required|array',
+        'certifications.*.id' => 'nullable|exists:applicant_certifications,id',
+        'certifications.*.name' => 'required|string|max:255',
+        'certifications.*.certification_type' => 'required|string|max:255',
+        'certifications.*.issuing_organization' => 'required|string|max:255',
+        'certifications.*.registered_with_authority' => 'required|boolean',
+        'certifications.*.registration_number' => 'nullable|string|max:255',
+        'certifications.*.authority_certificate_path' => 'nullable|string|max:255',
+        'certifications.*.level' => 'nullable|string|max:255',
+        'certifications.*.status' => 'required|in:obtained,in_progress',
+        'certifications.*.obtained_date' => 'nullable|date',
+    ]);
+
+    $userId = Auth::id();
+
+    foreach ($data['certifications'] as $cert) {
+        if (!empty($cert['id'])) {
+            // Update existing certification
+            ApplicantCertification::where('user_id', $userId)
+                ->where('id', $cert['id'])
+                ->update($cert);
+        } else {
+            // Create new certification
+            ApplicantCertification::create(array_merge($cert, ['user_id' => $userId]));
+        }
     }
 
-    public function postStep4(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'certification_type' => 'required|string|max:255',
-            'issuing_organization' => 'required|string|max:255',
-            'registered_with_authority' => 'required|boolean',
-            'registration_number' => 'nullable|string|max:255',
-            'authority_certificate_path' => 'nullable|string|max:255',
-            'level' => 'nullable|string|max:255',
-            'status' => 'required|in:obtained,in_progress',
-            'obtained_date' => 'nullable|date',
-        ]);
+    return redirect()->route('onboarding.step5');
+}
 
-        ApplicantCertification::updateOrCreate(
-            ['user_id' => Auth::id(), 'id' => $request->input('certification_id')],
-            $request->except('_token') + ['user_id' => Auth::id()]
-        );
-
-        return redirect()->route('onboarding.step5');
-    }
 
     public function step5()
     {
@@ -187,6 +199,6 @@ class OnboardingController extends Controller
         $user = Auth::user();
         $user->update(['onboarding_complete' => true]);
 
-        return redirect()->route('dashboard')->with('success', 'Onboarding completed successfully.');
+        return redirect()->route('applicant.dashboard')->with('success', 'Onboarding completed successfully.');
     }
 }

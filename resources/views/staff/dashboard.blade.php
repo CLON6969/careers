@@ -6,15 +6,17 @@
  <div class="wrapper">
   <nav id="sidebar" class="sidebar d-flex flex-column collapsed">
     <div class="d-flex justify-content-between align-items-center text-white px-3 py-2 border-bottom">
-      <span class="nav-label fw-bold">Dashboard</span>
+      <span class="nav-label fw-bold">Admin</span>
       <button id="toggleSidebar" class="btn btn-sm btn-outline-light"><i class="fas fa-bars"></i></button>
     </div>
     
 
 
     <ul class="nav flex-column mt-2" id="sidebarMenu">
-      <!-- Dynamic menu will be inserted here -->
+
+            
     </ul>
+
 
 <div class="mt-auto text-white px-3 py-2">
     <form method="POST" action="{{ route('logout') }}" class="logout-form">
@@ -33,14 +35,12 @@
   
   <div class="content">
     <div class="topbar">
-       <img src="{{ asset('uploads/pics/logo2.png') }}" alt="logo">
       <button id="toggleTheme" class="btn btn-sm btn-secondary">Dark Mode</button>
     </div>
-    <iframe id="contentFrame" src="{{ route('user.finance.index') }}"></iframe>
+    <iframe id="contentFrame" src="{{ route('loading_count_down') }}"></iframe>
   </div>
 </div>
-
-<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('/public/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script>
   const sidebar = document.getElementById("sidebar");
   const toggleBtn = document.getElementById("toggleSidebar");
@@ -85,6 +85,26 @@ toggleTheme.addEventListener("click", () => {
     tooltipTriggerList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
   }
 
+function renderItems(items) {
+  return items.map(item => {
+    if (item.children) {
+      const submenuId = item.label.replace(/\s+/g, '') + "SubMenu";
+      return `
+        <li>
+          <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#${submenuId}" role="button">
+            <div>${item.label}</div><i class="fas fa-angle-down"></i>
+          </a>
+          <ul class="collapse nested-submenu list-unstyled ps-3" id="${submenuId}">
+            ${renderItems(item.children)}
+          </ul>
+        </li>
+      `;
+    } else {
+      return `<li><a onclick="selectItem(this, '${item.url}')" class="nav-link">${item.label}</a></li>`;
+    }
+  }).join('');
+}
+
 function createDropdown(title, icon, items) {
   const menuId = title.replace(/\s+/g, '') + "Menu";
   const li = document.createElement('li');
@@ -98,22 +118,11 @@ function createDropdown(title, icon, items) {
       <i class="fas fa-chevron-down nav-label"></i>
     </a>
     <ul class="collapse submenu list-unstyled" id="${menuId}">
-      ${items.map(item =>
-        item.children ?
-          `<li data-bs-toggle="tooltip" title="${title}" >
-            <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#${item.label.replace(/\s+/g, '')}SubMenu" role="button">
-              <div>${item.label}</div><i class="fas fa-angle-down"></i>
-            </a>
-            <ul class="collapse nested-submenu list-unstyled" id="${item.label.replace(/\s+/g, '')}SubMenu">
-              ${item.children.map(sub => `<li><a onclick="selectItem(this, '${sub.url}')" class="nav-link">${sub.label}</a></li>`).join('')}
-            </ul>
-          </li>` :
-          `<li><a onclick="selectItem(this, '${item.url}')" class="nav-link">${item.label}</a></li>`
-      ).join('')}
+      ${renderItems(items)}
     </ul>
   `;
 
-  // Add event listener to collapse others when this one is opened
+  // Collapse logic
   setTimeout(() => {
     const trigger = li.querySelector(`[href="#${menuId}"]`);
     const targetMenu = li.querySelector(`#${menuId}`);
@@ -136,38 +145,14 @@ function createDropdown(title, icon, items) {
 
 
 
+
   
 
-  menu.appendChild(createDropdown('Profile', 'fas fa-user', [
-    { label: 'View Profile', url: '/profile/view' },
-    { label: 'Edit Profile', url: '/profile/edit' }
-  ]));
 
 
 
-  menu.appendChild(createDropdown('Transactions', 'fas fa-briefcase', [
-    { label: 'Approved', url: '/loading_count_down' },
-    { label: 'Pending', url: '/transactions/pending' },
-    { label: 'Rejected', url: '/transactions/rejected' },
 
-    {
-      label: 'Analytics',
-      children: [
-        { label: 'Monthly', url: '/transactions/analytics/monthly' },
-        { label: 'Yearly', url: '/transactions/analytics/yearly' }
-      ]
-    }
 
-  ]));
-
-  menu.appendChild(createDropdown('Finance', 'fas fa-coins', [
-  { label: 'Overview', url: '/user/finance/' },
-  { label: 'payments', url: '/user/finance/payments/create' },
-  { label: 'Invoices', url: '/user/finance/invoices/create' },
-  { label: 'Expenses', url: '/user/finance/expenses/create' },
-  { label: 'Budget', url: '/user/finance/budgets/create' },
-  { label: 'Reports', url: '/user/finance/reports/' }
-]));
 
   enableTooltips();
 </script>

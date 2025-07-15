@@ -3,11 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <!-- icon -->
+   <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+
     <title>{{ $job->title }} | Job Details</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { darkMode: 'class' }</script>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    
+    @if (session('success'))
+    <div class="max-w-4xl mx-auto mt-6 px-4">
+        <div class="bg-green-100 border border-green-400 text-green-800 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Success!</strong>
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="max-w-4xl mx-auto mt-6 px-4">
+        <div class="bg-red-100 border border-red-400 text-red-800 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Oops!</strong>
+            <span class="block sm:inline">{{ session('error') }}</span>
+        </div>
+    </div>
+@endif
+
 
     <!-- Header -->
     <header class="bg-white dark:bg-gray-800 shadow p-5 flex justify-between items-center">

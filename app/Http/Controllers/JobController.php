@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\JobPost;
 use App\Models\Job_page;
-use Illuminate\Http\Request;
 use App\Models\Logo;
 
 class JobController extends Controller
 {
-    // Single index method to handle search/filter + pagination
+    // Show all open jobs with filters
     public function index(Request $request)
     {
         $query = JobPost::query()->where('status', 'open');
@@ -31,22 +31,20 @@ class JobController extends Controller
         }
 
         $jobs = $query->latest()->paginate(12)->withQueryString();
-
-         $job_page = job_page::first();
-          $logo = Logo::first();
+        $job_page = Job_page::first();
+        $logo = Logo::first();
 
         return view('jobs.index', compact('jobs', 'job_page', 'logo'));
     }
 
-    // Show details of a job post
+    // Show job details
     public function show($slug)
     {
-        $job = JobPost::with(['skills', 'experiences', 'qualifications'])
+        $job = JobPost::with(['skills', 'experiences', 'qualifications', 'questions'])
             ->where('slug', $slug)
             ->firstOrFail();
-            
-        $logo = Logo::first();
 
+        $logo = Logo::first();
 
         return view('jobs.show', compact('job', 'logo'));
     }

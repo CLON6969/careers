@@ -25,7 +25,7 @@ class RedirectBasedOnRole
             case 'user':
                 return redirect()->route('user.dashboard');
             case 'applicant':
-                return redirect()->route('dashboard');
+                return redirect()->route('applicant.dashboard');
             default:
                 abort(403, 'Unauthorized role.');
         }

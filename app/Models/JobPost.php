@@ -35,6 +35,13 @@ class JobPost extends Model
         return $this->hasMany(JobQualification::class);
     }
 
+    public function questions()
+    {
+        return $this->hasMany(JobQuestion::class);
+    }
+
+    
+
     public function user()
     {
         return $this->belongsTo(User::class, 'posted_by');
