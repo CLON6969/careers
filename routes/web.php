@@ -12,7 +12,9 @@ use App\Models\{
 use App\Http\Controllers\{
 HomeController,
 JobController,
-ApplicationController
+ApplicationController,
+ContactController,
+supportController,
 
 
 };
@@ -20,6 +22,11 @@ ApplicationController
 
 Route::get('/', [HomeController::class, 'index']);
 
+Route::get('/contact', [ContactController::class, 'show'])->name('contact.form');
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+
+Route::get('/support', [supportController::class, 'show'])->name('support.form');
+Route::post('/support', [supportController::class, 'submit'])->name('support.submit');
 
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 Route::get('/jobs/{slug}', [JobController::class, 'show'])->name('jobs.show');

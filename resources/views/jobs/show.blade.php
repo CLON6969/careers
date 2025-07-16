@@ -58,13 +58,27 @@
                     </p>
                 </div>
                 <div class="flex flex-col items-end gap-2">
-<a href="{{ auth()->check() ? route('jobs.apply', $job->slug) : route('register') }}"
-   class="bg-green-600 hover:bg-green-700 text-white text-sm px-6 py-2 rounded-lg font-semibold shadow transition">
-   Apply Now
-</a>
 
-                    <img src="{{ asset('/public/uploads/pics/' . $logo->picture) }}" style="margin-right: 30px; margin-top: 20px;" class="w-12 h-12" alt="Company logo">
-                </div>
+
+<!-- Apply Button & Logo -->
+
+    @if ($job->application_deadline->isFuture())
+        <a href="{{ auth()->check() ? route('jobs.apply', $job->slug) : route('register') }}"
+           class="bg-green-600 hover:bg-green-700 text-white text-sm px-6 py-2 rounded-lg font-semibold shadow transition">
+           Apply Now
+        </a>
+    @else
+        <div class="text-red-600 text-sm font-semibold border border-red-300 bg-red-50 dark:bg-red-800 dark:border-red-700 dark:text-red-200 px-4 py-2 rounded-lg">
+            Applications for this job are now closed.
+        </div>
+    @endif
+
+    <img src="{{ asset('/public/uploads/pics/' . $logo->picture) }}"
+         style="margin-right: 30px; margin-top: 20px;" class="w-12 h-12" alt="Company logo">
+</div>
+
+
+
             </div>
 
             <hr class="border-t border-gray-300 dark:border-gray-600">
