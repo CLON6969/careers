@@ -27,7 +27,7 @@
 
 
    <!-- CSS Scripts -->
-   <link href="{{ asset('/public/resources/css/admin_dashboard.css') }}" rel="stylesheet">
+   <link href="{{ asset('/public/resources/css/admin_dashboar.css') }}" rel="stylesheet">
 
   
    <title>Kumoyo | Dashboard</title>

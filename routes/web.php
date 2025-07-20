@@ -41,6 +41,7 @@ Route::get('/jobs/{slug}', [JobController::class, 'show'])->name('jobs.show');
 Route::middleware(['auth', 'ensure.applicant'])->group(function () {
     Route::get('/apply/{slug}', [ApplicationController::class, 'create'])->name('jobs.apply');
     Route::post('/apply/{slug}', [ApplicationController::class, 'store'])->name('jobs.apply.store');
+    
 });
 
 

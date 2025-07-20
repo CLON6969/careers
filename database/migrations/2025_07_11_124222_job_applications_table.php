@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('job_post_id')->constrained()->onDelete('cascade');
             $table->text('cover_letter')->nullable();
+             $table->string('cv')->nullable();
+
             $table->json('answers')->nullable();
             $table->enum('status', ['submitted', 'shortlisted', 'interview', 'accepted', 'rejected'])->default('submitted');
             $table->timestamp('submitted_at')->nullable();

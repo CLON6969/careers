@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
 
     <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    
     <link href="{{ asset('/public/css/app.css') }}" rel="stylesheet">
 
 

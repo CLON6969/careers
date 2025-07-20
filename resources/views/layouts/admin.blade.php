@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+         <!-- icon -->
+   <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+
+       <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+
+              <!-- fontawsome back up-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+
+    <title>Step X</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Reset and font */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fafb;
+    color: #1f2937;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1024px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Header section */
+h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: #111827;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2563eb;
+}
+
+.btn-success {
+    background-color: #10b981;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #059669;
+}
+
+.btn-info {
+    background-color: #0ea5e9;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #0284c7;
+}
+
+.btn-danger {
+    background-color: #ef4444;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+}
+
+.btn-secondary {
+    background-color: #6b7280;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #4b5563;
+}
+
+.btn-sm {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.75rem;
+}
+
+/* Form */
+label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+    color: #374151;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    background-color: #f9fafb;
+    transition: border-color 0.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background-color: #ffffff;
+}
+
+/* Layout helpers */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.col-md-4,
+.col-md-6 {
+    flex: 1;
+    min-width: 280px;
+}
+
+/* Table */
+table.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.table thead {
+    background-color: #f3f4f6;
+    font-weight: 600;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+.table td .btn {
+    margin-right: 0.25rem;
+}
+
+.table td:last-child {
+    white-space: nowrap;
+}
+
+/* Alerts */
+.alert-success {
+    background-color: #d1fae5;
+    color: #065f46;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    text-transform: capitalize;
+}
+
+.bg-success {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.bg-secondary {
+    background-color: #e5e7eb;
+    color: #374151;
+}
+
+/* Repeatable input group */
+.input-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.input-group input {
+    flex: 1;
+}
+
+.input-group .remove-btn {
+    padding: 0.4rem 0.75rem;
+}
+
+.mt-2, .mt-3, .mt-4 {
+    margin-top: 0.5rem;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
+/* Add to your existing CSS */
+
+/* Container for action buttons inside table cells */
+.table td .action-buttons {
+    display: flex;
+    gap: 0.5rem;      /* spacing between buttons */
+    align-items: center;
+    white-space: nowrap; /* prevent wrapping */
+}
+
+/* Ensure buttons inside table cells have consistent small size and spacing */
+.table td .action-buttons .btn {
+    margin: 0; /* override margin-right */
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem; /* space between icon and text */
+}
+
+/* Optional: icon sizing inside buttons */
+.table td .action-buttons .btn i {
+    font-size: 1rem;
+}
+
+/* Hover effects are inherited from your existing .btn styles */
+
+/* If you want the form group input and remove button spacing refined */
+.input-group {
+    gap: 0.75rem; /* slightly more spacing */
+    margin-bottom: 1rem;
+}
+.input-group .remove-btn {
+    background-color: #ef4444;
+    color: white;
+    border-radius: 0.375rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    padding: 0.35rem 0.75rem;
+}
+.input-group .remove-btn:hover {
+    background-color: #dc2626;
+}
+.action_buttons{
+    display: flex;
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.buttons h4{
+
+   padding: 10px;
+}
+
+    </style>
+</head>
+<body>
+     @yield('content')
+
+<script>
+    let skillIndex = {{ count(old('skills', $job->skills ?? [])) }};
+    let experienceIndex = {{ count(old('experiences', $job->experiences ?? [])) }};
+    let qualificationIndex = {{ count(old('qualifications', $job->qualifications ?? [])) }};
+    let questionIndex = {{ count(old('questions', $job->questions ?? [])) }};
+
+    function addSkill() {
+        let tpl = document.getElementById('skill-template').innerHTML.replace(/__INDEX__/g, skillIndex);
+        document.getElementById('skills-container').insertAdjacentHTML('beforeend', tpl);
+        skillIndex++;
+    }
+    function addExperience() {
+        let tpl = document.getElementById('experience-template').innerHTML.replace(/__INDEX__/g, experienceIndex);
+        document.getElementById('experiences-container').insertAdjacentHTML('beforeend', tpl);
+        experienceIndex++;
+    }
+    function addQualification() {
+        let tpl = document.getElementById('qualification-template').innerHTML.replace(/__INDEX__/g, qualificationIndex);
+        document.getElementById('qualifications-container').insertAdjacentHTML('beforeend', tpl);
+        qualificationIndex++;
+    }
+    function addQuestion() {
+        let tpl = document.getElementById('question-template').innerHTML.replace(/__INDEX__/g, questionIndex);
+        document.getElementById('questions-container').insertAdjacentHTML('beforeend', tpl);
+        questionIndex++;
+    }
+
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-skill')) {
+            e.target.closest('.skill-item').remove();
+        }
+        if (e.target.classList.contains('remove-experience')) {
+            e.target.closest('.experience-item').remove();
+        }
+        if (e.target.classList.contains('remove-qualification')) {
+            e.target.closest('.qualification-item').remove();
+        }
+        if (e.target.classList.contains('remove-question')) {
+            e.target.closest('.question-item').remove();
+        }
+    });
+</script>
+
+</body>
+</html>

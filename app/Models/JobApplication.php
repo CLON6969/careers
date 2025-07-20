@@ -13,6 +13,7 @@ class JobApplication extends Model
         'user_id',
         'job_post_id',
         'cover_letter',
+        'cv',
         'answers',
         'status',
         'submitted_at',
@@ -34,4 +35,11 @@ class JobApplication extends Model
     {
         return $this->belongsTo(JobPost::class, 'job_post_id');
     }
+
+  public function jobPost()
+{
+    return $this->belongsTo(JobPost::class, 'job_post_id');
+}
+
+
 }

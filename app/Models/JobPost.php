@@ -5,6 +5,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class JobPost extends Model
 {
@@ -40,6 +41,16 @@ class JobPost extends Model
         return $this->hasMany(JobQuestion::class);
     }
 
+
+
+
+
+
+
+public function applications(): HasMany
+{
+    return $this->hasMany(JobApplication::class, 'job_post_id');
+}
     
 
     

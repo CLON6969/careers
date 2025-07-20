@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        // Voluntary Disclosures
+        Schema::create('voluntary_disclosures', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->enum('disability_status', ['yes', 'no', 'prefer_not_to_say'])->nullable();
+            $table->string('ethnicity')->nullable();
+            $table->string('gender_identity')->nullable();
+            $table->boolean('is_veteran')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        //
+    Schema::dropIfExists('voluntary_disclosures');
+    }
+};

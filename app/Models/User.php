@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -78,6 +79,52 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(User::class, 'parent_account_id');
     }
+
+   
+public function profile()
+{
+    return $this->hasOne(ApplicantProfile::class);
+}
+
+public function experiences()
+{
+    return $this->hasMany(Experience::class);
+}
+
+public function educations()
+{
+    return $this->hasMany(Education::class);
+}
+
+public function certifications()
+{
+    return $this->hasMany(ApplicantCertification::class);
+}
+
+public function voluntaryDisclosure()
+{
+    return $this->hasOne(VoluntaryDisclosure::class);
+}
+
+public function applicantProfile()
+{
+    return $this->hasOne(\App\Models\ApplicantProfile::class);
+}
+
+// User.php
+
+
+
+
+
+
+
+public function voluntaryDisclosures()
+{
+    return $this->hasOne(VoluntaryDisclosure::class);
+}
+
+
 
     
 }

@@ -20,8 +20,26 @@
             </div>
         @endif
 
-        <form action="{{ route('jobs.apply.store', $job->slug) }}" method="POST">
+        <form action="{{ route('jobs.apply.store', $job->slug) }}" method="POST" enctype="multipart/form-data">
             @csrf
+
+            {{-- Upload CV --}}
+            <div class="mb-6">
+                <label for="cv" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Upload CV (PDF, DOC, DOCX) <span class="text-red-500">*</span>
+                </label>
+                <input
+                    id="cv"
+                    name="cv"
+                    type="file"
+                    accept=".pdf,.doc,.docx"
+                    required
+                    class="mt-1 block w-full text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 cursor-pointer focus:outline-none"
+                >
+                @error('cv')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
 
             {{-- Cover Letter --}}
             <div class="mb-6">
@@ -63,7 +81,7 @@
                 @endforeach
             @endif
 
-            {{-- Actions --}}
+            {{-- Submit Actions --}}
             <div class="flex justify-between items-center mt-6">
                 <a href="{{ route('jobs.show', $job->slug) }}"
                    class="text-sm text-gray-500 dark:text-gray-400 hover:text-indigo-600 transition">
