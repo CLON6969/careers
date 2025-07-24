@@ -1,14 +1,17 @@
 <?php
 // public controllers
 use App\Http\Controllers\{
-OnboardingController,
-DashboardController
-
-
+    OnboardingController,
+    DashboardController,
+    User\ApplicantProfileController,
+    User\ApplicantLocationController,
+    User\ExperienceController,
+    User\EducationController,
+    User\ApplicantCertificationController,
+    User\VoluntaryDisclosureController
 };
 
- // Applicant-only routes...
-
+// Applicant-only onboarding routes
 Route::middleware(['auth', 'ensure.applicant'])->prefix('onboarding')->name('onboarding.')->group(function () {
     Route::get('step1', [OnboardingController::class, 'step1'])->name('step1');
     Route::post('step1', [OnboardingController::class, 'postStep1'])->name('postStep1');
@@ -29,13 +32,17 @@ Route::middleware(['auth', 'ensure.applicant'])->prefix('onboarding')->name('onb
     Route::post('submit', [OnboardingController::class, 'submit'])->name('submit');
 });
 
-
+// Applicant dashboard & related routes
 Route::middleware(['auth', 'role:4'])->prefix('applicant')->name('applicant.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'applicant'])->name('dashboard');
-    // Applicant-only routes...
 
     Route::view('/loading_count_down', 'loading_count_down');
+
+    // Applicant resource routes for profile and related models
+    Route::resource('profile', ApplicantProfileController::class);
+    Route::resource('locations', ApplicantLocationController::class);
+    Route::resource('experiences', ExperienceController::class);
+    Route::resource('educations', EducationController::class);
+    Route::resource('certifications', ApplicantCertificationController::class);
+    Route::resource('voluntary_disclosures', VoluntaryDisclosureController::class);
 });
-
-
-

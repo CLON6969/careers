@@ -1,4 +1,4 @@
-@extends('onboarding.layout')
+@extends('onboarding.base')
 
 @section('form')
 <h2 class="text-xl font-semibold mb-4">Personal Information</h2>

@@ -1,7 +1,7 @@
 
 
 
-@extends('layouts.app') 
+@extends('layouts.base') 
 
 @section('content')
    <!-- STEP 2: My Experience -->

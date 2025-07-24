@@ -120,6 +120,7 @@
   createNavButton('Jobs', 'fas fa-briefcase', '{{ route('admin.web.job.index') }}');
   createNavButton('Applications', 'fas fa-file-alt', '{{ route('admin.web.applications.index') }}');
 
+
   // General Web Settings
   createDropdown('Web Settings', 'fas fa-globe', [
     {
