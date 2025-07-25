@@ -2,76 +2,71 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\ApplicantCertification;
 use Illuminate\Http\Request;
+use App\Models\ApplicantCertification;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
 
 class ApplicantCertificationController extends Controller
 {
-
-       use AuthorizesRequests; 
     public function index()
     {
-        $certifications = ApplicantCertification::where('user_id', Auth::id())->get();
-        return view('user.certifications.index', compact('certifications'));
+        $items = ApplicantCertification::where('user_id', Auth::id())->get();
+        return view('user.applicant.certifications.index', compact('items'));
     }
 
     public function create()
     {
-        return view('user.certifications.create');
+        return view('user.applicant.certifications.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $r)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'issuing_organization' => 'nullable|string|max:255',
-            'issue_date' => 'nullable|date',
-            'expiration_date' => 'nullable|date|after_or_equal:issue_date',
-            'credential_id' => 'nullable|string|max:100',
-            'credential_url' => 'nullable|url|max:255',
+        $r->validate([
+            'name'=>'required|string|max:255',
+            'certification_type'=>'required|string|max:255',
+            'issuing_organization'=>'required|string|max:255',
+            'obtained_date'=>'required|date',
         ]);
-
-        $validated['user_id'] = Auth::id();
-
-        ApplicantCertification::create($validated);
-
-        return Redirect::route('user.certifications.index')->with('status', 'Certification added.');
+        ApplicantCertification::create(array_merge($r->only(['name','certification_type','issuing_organization','registration_number','obtained_date']), ['user_id'=>Auth::id()]));
+        return redirect()->route('user.applicant.certifications.index')->with('success','Certification added.');
     }
 
-    public function edit(ApplicantCertification $certification)
-    {
-        $this->authorize('update', $certification);
-        return view('user.certifications.edit', compact('certification'));
-    }
+public function edit($id)
+{
+    $cert = ApplicantCertification::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+    return view('user.applicant.certifications.edit', compact('cert'));
+}
 
-    public function update(Request $request, ApplicantCertification $certification)
-    {
-        $this->authorize('update', $certification);
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'issuing_organization' => 'nullable|string|max:255',
-            'issue_date' => 'nullable|date',
-            'expiration_date' => 'nullable|date|after_or_equal:issue_date',
-            'credential_id' => 'nullable|string|max:100',
-            'credential_url' => 'nullable|url|max:255',
-        ]);
+public function update(Request $r, $id)
+{
+    $cert = ApplicantCertification::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
 
-        $certification->update($validated);
+    $r->validate([
+        'name'=>'required|string|max:255',
+        'certification_type'=>'required|string|max:255',
+        'issuing_organization'=>'required|string|max:255',
+        'obtained_date'=>'required|date',
+    ]);
 
-        return Redirect::route('user.certifications.index')->with('status', 'Certification updated.');
-    }
+    $cert->update($r->only([
+        'name',
+        'certification_type',
+        'issuing_organization',
+        'registration_number',
+        'obtained_date'
+    ]));
 
-    public function destroy(ApplicantCertification $certification)
-    {
-        $this->authorize('delete', $certification);
+    return redirect()->route('user.applicant.certifications.index')->with('success','Certification updated.');
+}
 
-        $certification->delete();
 
-        return Redirect::route('user.certifications.index')->with('status', 'Certification deleted.');
-    }
+public function destroy($id)
+{
+    $cert = ApplicantCertification::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+    $cert->delete();
+
+    return back()->with('success', 'Certification deleted.');
+}
+
 }

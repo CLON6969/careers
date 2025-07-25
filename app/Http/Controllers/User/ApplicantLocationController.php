@@ -1,67 +1,91 @@
 <?php
+
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\ApplicantLocation;
 use Illuminate\Http\Request;
+use App\Models\ApplicantLocation;
+use App\Models\Location;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
 
 class ApplicantLocationController extends Controller
 {
-
-       use AuthorizesRequests; 
     public function index()
     {
-        $locations = ApplicantLocation::where('user_id', Auth::id())->get();
-        return view('user.applicant_locations.index', compact('locations'));
+        $items = ApplicantLocation::where('user_id', Auth::id())->with('location')->get();
+        return view('user.applicant.locations.index', compact('items'));
     }
 
     public function create()
     {
-        return view('user.applicant_locations.create');
+        $locations = Location::all();
+        return view('user.applicant.locations.create', compact('locations'));
     }
 
-    public function store(Request $request)
+    public function store(Request $r)
     {
-        $validated = $request->validate([
-            'location_id' => 'required|integer|exists:locations,id',
+        $r->validate([
+            'location_id' => 'nullable|integer|exists:locations,id',
+            'new_province' => 'nullable|string|max:255',
+            'new_city' => 'nullable|string|max:255',
         ]);
 
-        $validated['user_id'] = Auth::id();
+        if ($r->filled(['new_province', 'new_city'])) {
+            $location = Location::create([
+                'province' => $r->new_province,
+                'city' => $r->new_city,
+            ]);
+            $locationId = $location->id;
+        } elseif ($r->filled('location_id')) {
+            $locationId = $r->location_id;
+        } else {
+            return back()->withErrors(['Please select or enter a location.']);
+        }
 
-        ApplicantLocation::create($validated);
-
-        return Redirect::route('user.applicant_locations.index')->with('status', 'Location added.');
-    }
-
-    public function edit(ApplicantLocation $applicantLocation)
-    {
-        $this->authorize('update', $applicantLocation); // optional: add policy for safety
-        return view('user.applicant_locations.edit', compact('applicantLocation'));
-    }
-
-    public function update(Request $request, ApplicantLocation $applicantLocation)
-    {
-        $this->authorize('update', $applicantLocation);
-
-        $validated = $request->validate([
-            'location_id' => 'required|integer|exists:locations,id',
+        ApplicantLocation::create([
+            'user_id' => Auth::id(),
+            'location_id' => $locationId
         ]);
 
-        $applicantLocation->update($validated);
-
-        return Redirect::route('user.applicant_locations.index')->with('status', 'Location updated.');
+        return redirect()->route('user.applicant.locations.index')->with('success', 'Location added.');
     }
 
-    public function destroy(ApplicantLocation $applicantLocation)
+    public function edit(ApplicantLocation $location)
     {
-        $this->authorize('delete', $applicantLocation);
+        abort_if($location->user_id !== Auth::id(), 403);
+        $locations = Location::all();
+        return view('user.applicant.locations.edit', compact('location', 'locations'));
+    }
 
-        $applicantLocation->delete();
+    public function update(Request $r, ApplicantLocation $location)
+    {
+        abort_if($location->user_id !== Auth::id(), 403);
 
-        return Redirect::route('user.applicant_locations.index')->with('status', 'Location deleted.');
+        $r->validate([
+            'location_id' => 'nullable|integer|exists:locations,id',
+            'new_province' => 'nullable|string|max:255',
+            'new_city' => 'nullable|string|max:255',
+        ]);
+
+        if ($r->filled(['new_province', 'new_city'])) {
+            $newLocation = Location::create([
+                'province' => $r->new_province,
+                'city' => $r->new_city,
+            ]);
+            $location->update(['location_id' => $newLocation->id]);
+        } elseif ($r->filled('location_id')) {
+            $location->update(['location_id' => $r->location_id]);
+        } else {
+            return back()->withErrors(['Please select or enter a location.']);
+        }
+
+        return redirect()->route('user.applicant.locations.index')->with('success', 'Location updated.');
+    }
+
+    public function destroy(ApplicantLocation $location)
+    {
+        abort_if($location->user_id !== Auth::id(), 403);
+        $location->delete();
+        return back()->with('success', 'Location deleted.');
     }
 }

@@ -2,48 +2,33 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\ApplicantProfile;
 use Illuminate\Http\Request;
+use App\Models\ApplicantProfile;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
 
 class ApplicantProfileController extends Controller
 {
-
-       use AuthorizesRequests; 
-    public function index()
-    {
-        $profile = ApplicantProfile::where('user_id', Auth::id())->first();
-        return view('user.applicant_profile.index', compact('profile'));
-    }
-
     public function edit()
     {
-        $profile = ApplicantProfile::where('user_id', Auth::id())->firstOrFail();
-        return view('user.applicant_profile.edit', compact('profile'));
+        $profile = ApplicantProfile::firstOrNew(['user_id'=>Auth::id()]);
+        return view('user.applicant.profile.edit', compact('profile'));
     }
 
-    public function update(Request $request)
+    public function update(Request $r)
     {
-        $profile = ApplicantProfile::where('user_id', Auth::id())->firstOrFail();
-
-        $validated = $request->validate([
-            'recruitment_status' => 'nullable|string|max:255',
-            'national_id' => 'nullable|string|max:100',
-            'date_of_birth' => 'nullable|date',
-            'gender' => 'nullable|string|max:10',
-            'nationality' => 'nullable|string|max:100',
-            'address' => 'nullable|string|max:255',
-            'postal_code' => 'nullable|string|max:20',
-            'linkedin_url' => 'nullable|url|max:255',
-            'professional_summary' => 'nullable|string|max:1000',
-            'years_of_experience' => 'nullable|integer|min:0',
+        $data = $r->validate([
+            'recruitment_status'=>'required|string',
+            'date_of_birth'=>'required|date',
+            'national_id'=>'nullable|string',
+            'gender'=>'required|string',
+            'nationality'=>'nullable|string',
+            'address'=>'nullable|string',
+            'years_of_experience'=>'nullable|numeric',
+            'professional_summary'=>'nullable|string',
+            'linkedin_url'=>'nullable|url',
         ]);
-
-        $profile->update($validated);
-
-        return Redirect::route('user.applicant_profile.index')->with('status', 'Profile updated successfully.');
+        $data['user_id'] = Auth::id();
+        ApplicantProfile::updateOrCreate(['user_id'=>Auth::id()], $data);
+        return back()->with('success','Profile saved.');
     }
 }

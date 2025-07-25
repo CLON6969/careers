@@ -81,7 +81,7 @@ Route::get('/login', function () {
             1 => 'admin.dashboard',
             2 => 'staff.dashboard',
             3 => 'user.dashboard',
-            4 => 'applicant.dashboard',
+            4 => 'user.applicant.dashboard',
         });
     }
 
@@ -94,7 +94,7 @@ Route::get('/register', function () {
             1 => 'admin.dashboard',
             2 => 'staff.dashboard',
             3 => 'user.dashboard',
-            4 => 'applicant.dashboard',
+            4 => 'user.applicant.dashboard',
         });
     }
 

@@ -1,75 +1,65 @@
 <?php
+
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Education;
 use Illuminate\Http\Request;
+use App\Models\Education;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
 
 class EducationController extends Controller
 {
-
-       use AuthorizesRequests; 
     public function index()
     {
         $educations = Education::where('user_id', Auth::id())->get();
-        return view('user.educations.index', compact('educations'));
+        return view('user.applicant.educations.index', compact('educations'));
     }
 
     public function create()
     {
-        return view('user.educations.create');
+        return view('user.applicant.educations.create');
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'level' => 'required|string|max:255',
             'field_of_study' => 'required|string|max:255',
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-            'institution' => 'nullable|string|max:255',
         ]);
 
-        $validated['user_id'] = Auth::id();
+        Education::create([
+            'user_id' => Auth::id(),
+            'level' => $request->level,
+            'field_of_study' => $request->field_of_study,
+        ]);
 
-        Education::create($validated);
-
-        return Redirect::route('user.educations.index')->with('status', 'Education added.');
+        return redirect()->route('user.applicant.educations.index')->with('success', 'Education added.');
     }
 
     public function edit(Education $education)
     {
-        $this->authorize('update', $education);
-        return view('user.educations.edit', compact('education'));
+        abort_if($education->user_id !== Auth::id(), 403);
+        return view('user.applicant.educations.edit', compact('education'));
     }
 
     public function update(Request $request, Education $education)
     {
-        $this->authorize('update', $education);
+        abort_if($education->user_id !== Auth::id(), 403);
 
-        $validated = $request->validate([
+        $request->validate([
             'level' => 'required|string|max:255',
             'field_of_study' => 'required|string|max:255',
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-            'institution' => 'nullable|string|max:255',
         ]);
 
-        $education->update($validated);
+        $education->update($request->only(['level', 'field_of_study']));
 
-        return Redirect::route('user.educations.index')->with('status', 'Education updated.');
+        return redirect()->route('user.applicant.educations.index')->with('success', 'Education updated.');
     }
 
     public function destroy(Education $education)
     {
-        $this->authorize('delete', $education);
-
+        abort_if($education->user_id !== Auth::id(), 403);
         $education->delete();
-
-        return Redirect::route('user.educations.index')->with('status', 'Education deleted.');
+        return back()->with('success', 'Education deleted.');
     }
 }

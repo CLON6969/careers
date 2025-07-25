@@ -40,7 +40,7 @@ class AuthenticatedSessionController extends Controller
                 1 => route('admin.dashboard'),
                 2 => route('staff.dashboard'),
                 3 => route('user.dashboard'),
-                4 => route('applicant.dashboard'),
+                4 => route('user.applicant.dashboard'),
                 default => '/',
             });
         }

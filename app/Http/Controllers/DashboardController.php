@@ -92,6 +92,6 @@ public function jobUserSummary()
             return redirect()->route('onboarding.step1');
         }
 
-        return view('applicant.dashboard');
+        return view('user.applicant.dashboard');
     }
 }

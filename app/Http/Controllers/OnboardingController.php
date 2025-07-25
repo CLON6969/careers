@@ -199,6 +199,6 @@ public function postStep4(Request $request)
         $user = Auth::user();
         $user->update(['onboarding_complete' => true]);
 
-        return redirect()->route('applicant.dashboard')->with('success', 'Onboarding completed successfully.');
+        return redirect()->route('user.applicant.dashboard')->with('success', 'Onboarding completed successfully.');
     }
 }

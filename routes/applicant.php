@@ -1,14 +1,19 @@
 <?php
-// public controllers
+
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     OnboardingController,
     DashboardController,
-    User\ApplicantProfileController,
-    User\ApplicantLocationController,
-    User\ExperienceController,
-    User\EducationController,
-    User\ApplicantCertificationController,
-    User\VoluntaryDisclosureController
+};
+
+use App\Http\Controllers\User\{
+    ApplicantProfileController,
+    ApplicantLocationController,
+    ExperienceController,
+    EducationController,
+    ApplicantCertificationController,
+    VoluntaryDisclosureController,
+    CareerDashboardController
 };
 
 // Applicant-only onboarding routes
@@ -32,17 +37,20 @@ Route::middleware(['auth', 'ensure.applicant'])->prefix('onboarding')->name('onb
     Route::post('submit', [OnboardingController::class, 'submit'])->name('submit');
 });
 
-// Applicant dashboard & related routes
-Route::middleware(['auth', 'role:4'])->prefix('applicant')->name('applicant.')->group(function () {
+// Applicant dashboard & profile CRUD routes
+Route::middleware(['auth', 'role:4'])->prefix('user/applicant')->name('user.applicant.')->group(function () {
+
     Route::get('/dashboard', [DashboardController::class, 'applicant'])->name('dashboard');
+     Route::get('/dashboard/overview', [CareerDashboardController::class, 'index'])->name('dashboard.overview');
 
     Route::view('/loading_count_down', 'loading_count_down');
 
-    // Applicant resource routes for profile and related models
+    // Full resource routes for all applicant-related models
     Route::resource('profile', ApplicantProfileController::class);
     Route::resource('locations', ApplicantLocationController::class);
     Route::resource('experiences', ExperienceController::class);
     Route::resource('educations', EducationController::class);
     Route::resource('certifications', ApplicantCertificationController::class);
-    Route::resource('voluntary_disclosures', VoluntaryDisclosureController::class);
+        Route::get('voluntary_disclosures/edit', [VoluntaryDisclosureController::class, 'edit'])->name('voluntary_disclosures.edit');
+    Route::put('voluntary_disclosures', [VoluntaryDisclosureController::class, 'update'])->name('voluntary_disclosures.update');
 });

@@ -2,74 +2,58 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Experience;
 use Illuminate\Http\Request;
+use App\Models\Experience;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
 
 class ExperienceController extends Controller
 {
-
-       use AuthorizesRequests; 
     public function index()
     {
-        $experiences = Experience::where('user_id', Auth::id())->get();
-        return view('user.experiences.index', compact('experiences'));
+        $items = Experience::where('user_id', Auth::id())->get();
+        return view('user.applicant.experiences.index', compact('items'));
     }
 
     public function create()
     {
-        return view('user.experiences.create');
+        return view('user.applicant.experiences.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $r)
     {
-        $validated = $request->validate([
+        $r->validate([
             'employer' => 'required|string|max:255',
             'job_title' => 'required|string|max:255',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
-            'description' => 'nullable|string|max:1000', // optional extra field
         ]);
-
-        $validated['user_id'] = Auth::id();
-
-        Experience::create($validated);
-
-        return Redirect::route('user.experiences.index')->with('status', 'Experience added.');
+        Experience::create(array_merge($r->only(['employer','job_title','start_date','end_date']), ['user_id'=>Auth::id()]));
+        return redirect()->route('user.applicant.experiences.index')->with('success','Experience added.');
     }
 
     public function edit(Experience $experience)
     {
-        $this->authorize('update', $experience);
-        return view('user.experiences.edit', compact('experience'));
+        abort_if($experience->user_id !== Auth::id(),403);
+        return view('user.applicant.experiences.edit', compact('experience'));
     }
 
-    public function update(Request $request, Experience $experience)
+    public function update(Request $r, Experience $experience)
     {
-        $this->authorize('update', $experience);
-
-        $validated = $request->validate([
+        abort_if($experience->user_id !== Auth::id(),403);
+        $r->validate([
             'employer' => 'required|string|max:255',
             'job_title' => 'required|string|max:255',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
-            'description' => 'nullable|string|max:1000',
         ]);
-
-        $experience->update($validated);
-
-        return Redirect::route('user.experiences.index')->with('status', 'Experience updated.');
+        $experience->update($r->only(['employer','job_title','start_date','end_date']));
+        return redirect()->route('user.applicant.experiences.index')->with('success','Experience updated.');
     }
 
     public function destroy(Experience $experience)
     {
-        $this->authorize('delete', $experience);
-
+        abort_if($experience->user_id !== Auth::id(),403);
         $experience->delete();
-
-        return Redirect::route('user.experiences.index')->with('status', 'Experience deleted.');
+        return back()->with('success','Experience deleted.');
     }
 }
