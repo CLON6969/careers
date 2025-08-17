@@ -117,6 +117,7 @@
   }
 
   // Static nav buttons
+  
   createNavButton('Jobs', 'fas fa-briefcase', '{{ route('admin.web.job.index') }}');
   createNavButton('Applications', 'fas fa-file-alt', '{{ route('admin.web.applications.index') }}');
 
@@ -129,6 +130,7 @@
         { label: 'Footer Titles', url: '{{ route('admin.web.general.footer.titles.index') }}' },
         { label: 'Footer Items', url: '{{ route('admin.web.general.footer.items.index') }}' },
         { label: 'Logo', url: '{{ route('admin.web.general.logo.index') }}' },
+        { label: 'Nav-bar', url: '{{ route('admin.web.general.nav1.index') }}' },
         { label: 'Socials', url: '{{ route('admin.web.general.socials.index') }}' },
         { label: 'Partners', url: '{{ route('admin.web.general.partners.index') }}' },
         { label: 'Legal', url: '{{ route('admin.web.legal.index') }}' },

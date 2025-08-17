@@ -1,52 +1,56 @@
+:root {
+  --primary: #0c0e1a;
+  --accent: #00f7ff;
+  --bg: rgb(1, 18, 71);
+  --card: #111827;
+  --text: #d1d5db;
+  --muted: #64748b;
+  --glass: rgba(255, 255, 255, 0.05);
+  --overlay: rgba(0, 10, 40, 0.364);
+  --white: #ffffff;
+}
 
-    :root {
-      --primary: #0c0e1a;
-      --accent: #00f7ff;
-      --bg: rgb(1, 18, 71);
-      --card: #111827;
-      --text: #d1d5db;
-      --muted: #64748b;
-      --glass: rgba(255, 255, 255, 0.05);
-      --overlay: rgba(0, 10, 40, 0.364);
-      --white: #ffffff;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      
-      background-color: #000000;
-      color: var(--text);
-      line-height: 1.6;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000000;
+  color: var(--text);
+  line-height: 1.6;
+}
+
 section.hero {
   position: relative;
+  width: 99.4%;
   height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: center;
   color: var(--accent);
-  overflow: hidden;
 }
 
 section.hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--overlay, rgba(0, 0, 0, 0.6));
+  background: var(--overlay);
   z-index: 1;
 }
 
 section.hero img.bg {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
-  height: 0;
-  width: 99.4%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   object-fit: cover;
+  object-position: center;
   z-index: 0;
-
 }
 
 .hero .content {
@@ -55,20 +59,35 @@ section.hero img.bg {
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: 0 20px;
 }
 
 .hero .child1 {
-  margin-top: 10px; /* 80px default + 4px push */
+  padding-top: 8rem;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  text-shadow: 0 0 10px var(--white);
+}
+
+.hero p {
+  max-width: 700px;
+  margin: 0.5rem auto 0;
+  font-size: 1rem;
+  color: var(--text);
 }
 
 .hero .child2 {
   display: flex;
   justify-content: center;
   gap: 40px;
-  margin-top: auto;
   padding: 40px 20px;
   flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
 .hero .info-card {
@@ -90,7 +109,7 @@ section.hero img.bg {
   font-family: 'Orbitron', sans-serif;
   font-size: 2rem;
   font-weight: bold;
-  color: var(--accent, #00f7ff);
+  color: var(--accent);
 }
 
 .hero .label {
@@ -101,8 +120,18 @@ section.hero img.bg {
 }
 
 @media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+    padding-top: 6rem;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+    padding: 0 10px;
+  }
+
   .hero .child1 {
-    margin-top: 40px;
+    padding-top: 6rem;
   }
 
   .hero .child2 {
@@ -126,20 +155,20 @@ section.hero img.bg {
   }
 }
 
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.7rem;
+    padding-top: 4.5rem;
+  }
 
-    .hero h1 {
-    padding-top: 8rem;
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--primary);
-      text-shadow: 0 0 10px var(--white);
-    }
-    .hero p {
-      max-width: 700px;
-      margin: 0.5rem auto 0;
-      font-size: 1rem;
-      color: var(--text);
-    }
+  .hero p {
+    font-size: 0.85rem;
+  }
+
+  .hero .content {
+    padding: 0 10px;
+  }
+}
 
 
 

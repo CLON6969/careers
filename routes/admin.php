@@ -19,7 +19,8 @@ use App\Http\Controllers\Web\General\{
     FooterController,
     SocialController,
     LogoController,
-    PartnersController
+    PartnersController,
+    Nav1Controller
 };
 
 Route::middleware(['auth', 'role:1'])->prefix('admin')->name('admin.')->group(function () {
@@ -41,6 +42,7 @@ Route::get('/job-user-summary', [DashboardController::class, 'jobUserSummary'])-
 
     // --- Job Post Management ---
     Route::prefix('job')->name('web.job.')->group(function () {
+        Route::get('/userview', [WebJobPostController::class, 'userview'])->name('userview');
         Route::get('/', [WebJobPostController::class, 'index'])->name('index');
         Route::get('/create', [WebJobPostController::class, 'create'])->name('create');
         Route::post('/', [WebJobPostController::class, 'store'])->name('store');
@@ -121,6 +123,17 @@ Route::get('/job-user-summary', [DashboardController::class, 'jobUserSummary'])-
         Route::put('/{logo}/update', [LogoController::class, 'update'])->name('update');
         Route::delete('/{logo}/delete', [LogoController::class, 'destroy'])->name('destroy');
     });
+
+    // --- General Nav1 ---
+Route::prefix('web/general/nav1')->name('web.general.nav1.')->group(function () {
+    Route::get('/', [Nav1Controller::class, 'index'])->name('index');
+    Route::get('/create', [Nav1Controller::class, 'create'])->name('create');
+    Route::post('/store', [Nav1Controller::class, 'store'])->name('store');
+    Route::get('/{nav1}/edit', [Nav1Controller::class, 'edit'])->name('edit');
+    Route::put('/{nav1}/update', [Nav1Controller::class, 'update'])->name('update');
+    Route::delete('/{nav1}/delete', [Nav1Controller::class, 'destroy'])->name('destroy');
+});
+
 
     // --- General Partners ---
     Route::prefix('web/general/partners')->name('web.general.partners.')->group(function () {

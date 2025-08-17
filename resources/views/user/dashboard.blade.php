@@ -129,7 +129,7 @@
         { label: 'Footer Titles', url: '{{ route('admin.web.general.footer.titles.index') }}' },
         { label: 'Footer Items', url: '{{ route('admin.web.general.footer.items.index') }}' },
         { label: 'Logo', url: '{{ route('admin.web.general.logo.index') }}' },
-        { label: 'Socials', url: '{{ route('admin.web.general.socials.index') }}' },
+        { label: 'Socials', url: '{{ route(name: 'admin.web.general.socials.index') }}' },
         { label: 'Partners', url: '{{ route('admin.web.general.partners.index') }}' },
         { label: 'Legal', url: '{{ route('admin.web.legal.index') }}' },
       ]

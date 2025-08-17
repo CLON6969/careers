@@ -1,11 +1,21 @@
 @extends('layouts.home')
 
+
+
 @section('content')
 
 
 
+<!-- Blade Template -->
 <section class="hero">
-  <img src="{{ asset('/public/uploads/pics/' . $home->background_picture) }}" class="bg" alt="background picture">
+  <img 
+    src="{{ asset('/public/uploads/pics/' . $home->background_picture) }}" 
+    srcset="{{ asset('/public/uploads/pics/' . $home->background_picture) }} 1x, 
+            {{ asset('/public/uploads/pics/' . $home->background_picture) }} 2x"
+    class="bg" 
+    alt="background picture" 
+    loading="lazy"
+  >
 
   <div class="content">
     <div class="child1">
@@ -13,18 +23,15 @@
       <p>{{ $home->title1_content }}</p>
     </div>
 
-<div class="child2">
-
-
-
-  <div class="info-card">
-    <div class="number" data-count="{{ $totalUsers }}">0</div>
-    <div class="label">Users</div>
-  </div>
-
-
+    <div class="child2">
+      <div class="info-card">
+        <div class="number" data-count="{{ $totalUsers }}">0</div>
+        <div class="label">Users</div>
+      </div>
+    </div>
   </div>
 </section>
+
 
 
 
@@ -162,14 +169,29 @@
 
  <!-- this is for full screen overlay when clicked -->
 <script>
+let scrollPosition = 0;
+
 function openOverlay(id) {
+  // Save current scroll position
+  scrollPosition = window.scrollY || document.documentElement.scrollTop;
+
+  // Lock scrolling by fixing the body
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollPosition}px`;
+  document.body.style.width = '100%';
+
+  // Show overlay
   document.getElementById(id).classList.add('active');
-  document.body.style.overflow = 'hidden';
 }
 
 function closeOverlay() {
   document.querySelectorAll('.fullscreen-overlay').forEach(el => el.classList.remove('active'));
-  document.body.style.overflow = '';
+
+  // Restore body scroll
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  window.scrollTo(0, scrollPosition); // Return to saved scroll position
 }
 
 function toggleMore(button) {
@@ -178,7 +200,6 @@ function toggleMore(button) {
   button.textContent = moreContent.classList.contains('active') ? 'Show less' : 'Read more';
 }
 </script>
-
 
 
   
