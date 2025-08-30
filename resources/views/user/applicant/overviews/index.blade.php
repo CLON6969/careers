@@ -1,30 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container py-5">
-    <h2 class="mb-5 text-center">Application Review for {{ $user->name }}</h2>
+<div class="container">
+    <h5 class="mb-5 text-center"> {{ $user->name }}</h5>
 
-    {{-- Application Status --}}
-    <form method="POST" action="{{ route('admin.web.applications.update', $application->id) }}" class="mb-5">
-        @csrf
-        @method('PUT')
-        <div class="card shadow-sm border-0 rounded-4">
-            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
-                <span class="text-center w-100">Application Status</span>
-                <button type="submit" class="btn btn-light btn-sm rounded-pill">Update</button>
-            </div>
-            <div class="card-body">
-                <select name="status" class="form-select" required>
-                    @foreach(['submitted', 'shortlisted', 'interview', 'accepted', 'rejected'] as $status)
-                        <option value="{{ $status }}" {{ $application->status == $status ? 'selected' : '' }}>
-                            {{ ucfirst($status) }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    </form>
-
+   
     {{-- Job Applicant Details --}}
     <x-applicant.card class="mb-4">
         <x-slot name="title">
@@ -201,75 +181,7 @@
         </div>
     </x-applicant.card>
 
-    {{-- Application Materials --}}
-    <x-applicant.card class="mb-4">
-        <x-slot name="title">
-            <div class="fw-bold fs-5 pb-2 mb-3 text-center">Application Materials</div>
-        </x-slot>
-        <div class="table-responsive">
-            <table class="table table-sm table-bordered mb-0">
-                <tbody>
-                    <tr>
-                        <th>Cover Letter</th>
-                        <td>
-                            @if($application->cover_letter)
-                                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#coverLetterModal">
-                                    View Cover Letter
-                                </button>
-
-                                <!-- Cover Letter Modal -->
-                                <div class="modal fade" id="coverLetterModal" tabindex="-1">
-                                    <div class="modal-dialog modal-lg modal-dialog-centered">
-                                        <div class="modal-content rounded-4 shadow">
-                                            <div class="modal-header bg-primary text-white">
-                                                <h5 class="modal-title text-center w-100">Cover Letter</h5>
-                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="p-3" style="max-height: 70vh; overflow-y: auto; text-align: left;">
-                                                    {!! nl2br(e($application->cover_letter)) !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>CV</th>
-                        <td>
-                            @if($application->cv)
-                                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cvModal">
-                                    View CV
-                                </button>
-
-                                <!-- CV Modal -->
-                                <div class="modal fade" id="cvModal" tabindex="-1">
-                                    <div class="modal-dialog modal-xl modal-dialog-centered">
-                                        <div class="modal-content rounded-4 shadow">
-                                            <div class="modal-header bg-primary text-white">
-                                                <h5 class="modal-title text-center w-100">Curriculum Vitae (CV)</h5>
-                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                                            </div>
-                                            <div class="modal-body text-center">
-                                                <iframe src="{{ asset('public/storage/' . $application->cv) }}" width="100%" height="600px" frameborder="0"></iframe>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </x-applicant.card>
+ 
 
 </div>
 @endsection

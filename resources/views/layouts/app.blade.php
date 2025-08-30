@@ -36,5 +36,14 @@
         @yield('content')
     </main>
 
+        <style>
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out both;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </body>
 </html>

@@ -116,11 +116,21 @@
     menu.appendChild(li);
   }
 
+  // 🔥 Add hover → click trigger fix here
+document.querySelectorAll('.nav-link[data-bs-toggle="collapse"]').forEach(link => {
+  link.addEventListener('mouseenter', () => {
+    const targetId = link.getAttribute('href');
+    const submenu = document.querySelector(targetId);
+    if (!submenu.classList.contains('show')) {
+      link.click(); // trigger bootstrap collapse
+    }
+  });
+});
+
+
   // Static nav buttons
-  
   createNavButton('Jobs', 'fas fa-briefcase', '{{ route('admin.web.job.index') }}');
   createNavButton('Applications', 'fas fa-file-alt', '{{ route('admin.web.applications.index') }}');
-
 
   // General Web Settings
   createDropdown('Web Settings', 'fas fa-globe', [
@@ -148,4 +158,7 @@
 
   enableTooltips();
 </script>
+
+
+
 @endsection

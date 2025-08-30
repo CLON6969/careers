@@ -19,7 +19,7 @@
         </div>
 
         {{-- Summary Cards --}}
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 animate-fade-in">
             <div class="shadow p-4 rounded text-center bg-green-100 dark:bg-green-800 transition-colors">
                 <p class="text-green-800 dark:text-green-200 text-sm">Total Users</p>
                 <p class="text-2xl font-bold text-green-900 dark:text-green-100">{{ $totalUsers }}</p>

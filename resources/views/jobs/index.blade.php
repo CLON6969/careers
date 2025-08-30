@@ -86,7 +86,7 @@ padding-left: 40px;
 </Style>
 
 
-<header class="hero">
+<header class="hero  animate-fade-in">
     
      <img src="{{ asset('/public/uploads/pics/' . $job_page->background_picture) }}" alt="background">
     <div class="overlay">
@@ -95,7 +95,7 @@ padding-left: 40px;
             <p>{{ $job_page->title1_content }}</p>
         </div>
 
-        <div class="buttons">
+        <div  class="buttons  animate-fade-in">
             <a href="{{ $job_page->button1_url }}"><button class="btn">{{ $job_page->button1_name }} →</button></a>
             
 
@@ -112,51 +112,80 @@ padding-left: 40px;
     <header class="bg-white dark:bg-gray-800 shadow p-4 flex justify-between items-center">
         <h1 class="text-2xl font-extrabold text-indigo-700 dark:text-indigo-400">Career<span class="text-gray-800 dark:text-white">s</span></h1>
         <button onclick="document.documentElement.classList.toggle('dark')" class="text-sm text-gray-700 dark:text-gray-300 hover:text-indigo-600">
-            🌗 Dark Mode
+        <i class="fa-solid fa-moon"></i> Dark Mode
         </button>
     </header>
 
     <!-- Filter/Search Section -->
    <section class="py-6 px-4 bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-700">
-    <form action="{{ route('jobs.index') }}" method="GET">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
+  <form action="{{ route('jobs.index') }}" method="GET">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-4">
+
+        <!-- Search -->
+        <div class="relative">
+            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-indigo-500"></i>
             <input
                 type="text"
                 name="search"
                 value="{{ request('search') }}"
-                placeholder="🔍 Search job title..."
-                class="p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-md w-full text-sm"
+                placeholder="Search job title..."
+                class="pl-10 p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-md w-full text-sm"
             />
-            <select name="category" class="p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-md w-full text-sm">
-                <option value="">📂 All Categories</option>
+        </div>
+
+        <!-- Category -->
+        <div class="relative">
+            <i class="fas fa-folder-open absolute left-3 top-1/2 transform -translate-y-1/2 text-yellow-500"></i>
+            <select name="category" class="pl-10 p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-md w-full text-sm">
+                <option value="">All Categories</option>
                 <option value="IT" @if(request('category') == 'IT') selected @endif>IT</option>
                 <option value="Finance" @if(request('category') == 'Finance') selected @endif>Finance</option>
                 <option value="Education" @if(request('category') == 'Education') selected @endif>Education</option>
             </select>
-            <select name="location" class="p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-md w-full text-sm">
-                <option value="">📍 All Locations</option>
+        </div>
+
+        <!-- Location -->
+        <div class="relative">
+            <i class="fas fa-map-marker-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-red-800"></i>
+            <select name="location" class="pl-10 p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-md w-full text-sm">
+                <option value="">All Locations</option>
                 <option value="Lusaka" @if(request('location') == 'Lusaka') selected @endif>Lusaka</option>
                 <option value="Ndola" @if(request('location') == 'Ndola') selected @endif>Ndola</option>
                 <option value="Kitwe" @if(request('location') == 'Kitwe') selected @endif>Kitwe</option>
             </select>
-            <select name="employment_type" class="p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-md w-full text-sm">
-                <option value="">🕒 Job Type</option>
+        </div>
+
+        <!-- Job Type -->
+        <div class="relative">
+            <i class="fas fa-clock absolute left-3 top-1/2 transform -translate-y-1/2 text-green-500"></i>
+            <select name="employment_type" class="pl-10 p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-md w-full text-sm">
+                <option value="">Job Type</option>
                 <option value="full_time" @if(request('employment_type') == 'full_time') selected @endif>Full-time</option>
                 <option value="part_time" @if(request('employment_type') == 'part_time') selected @endif>Part-time</option>
                 <option value="contract" @if(request('employment_type') == 'contract') selected @endif>Contract</option>
                 <option value="internship" @if(request('employment_type') == 'internship') selected @endif>Internship</option>
             </select>
-            <button type="submit" class="bg-indigo-600 text-white rounded-md px-4 py-2 hover:bg-indigo-700 transition">
-                Search
-            </button>
+
+            
         </div>
-    </form>
+
+
+       
+        <!-- Submit -->
+        <button type="submit" class="bg-indigo-600 text-white rounded-md px-4 py-2 hover:bg-indigo-700 transition flex items-center justify-center">
+            <i class="fas fa-search mr-2 text-white"></i> Search
+        </button>
+        
+
+    </div>
+</form>
+
 </section>
 
 
     <!-- Job Listings -->
 <main class="flex-grow p-10 bg-gray-100 dark:bg-gray-900 transition-all">
-    <div class="max-w-7xl mx-auto grid gap-10 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+    <div class="max-w-7xl mx-auto grid gap-10 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 animate-fade-in">
 
         @foreach ($jobs as $job)
             <a href="{{ route('jobs.show', $job->slug) }}" class="relative block bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl px-8 py-10 min-h-[360px] w-full hover:shadow-2xl transition-all">
@@ -218,6 +247,14 @@ padding-left: 40px;
 </main>
 
 
-    <!-- Footer -->
-
+    <!-- script for fading in -->
+ <style>
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out both;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 @endsection

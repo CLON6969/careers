@@ -20,9 +20,6 @@
 
 
 
-
-
-
     <link href="{{ asset('/public/resources/css/more-nav.css') }}" rel="stylesheet">
      <link href="{{ asset('/public/resources/css/welcome.css') }}" rel="stylesheet">
 

@@ -7,7 +7,7 @@
 
 
 <!-- Blade Template -->
-<section class="hero">
+<section class="hero  animate-fade-in">
   <img 
     src="{{ asset('/public/uploads/pics/' . $home->background_picture) }}" 
     srcset="{{ asset('/public/uploads/pics/' . $home->background_picture) }} 1x, 
@@ -18,7 +18,7 @@
   >
 
   <div class="content">
-    <div class="child1">
+    <div class="child1 animate-fade-in">
       <h1>{{ $home->title1 }}</h1>
       <p>{{ $home->title1_content }}</p>
     </div>
@@ -254,5 +254,15 @@ function toggleMore(button) {
   activateFeature(currentIndex);
   startSlideshow();
 </script>
+
+ <style>
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out both;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 
 @endsection

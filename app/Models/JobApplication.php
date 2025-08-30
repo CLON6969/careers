@@ -43,3 +43,5 @@ class JobApplication extends Model
 
 
 }
+
+

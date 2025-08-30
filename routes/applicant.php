@@ -5,6 +5,7 @@ use App\Http\Controllers\{
     OnboardingController,
     DashboardController,
 };
+ use App\Http\Controllers\Web\OverviewController;
 
 use App\Http\Controllers\User\{
     ApplicantProfileController,
@@ -13,7 +14,7 @@ use App\Http\Controllers\User\{
     EducationController,
     ApplicantCertificationController,
     VoluntaryDisclosureController,
-    CareerDashboardController
+    CareerDashboardController,
 };
 
 // Applicant-only onboarding routes
@@ -43,6 +44,8 @@ Route::middleware(['auth', 'role:4'])->prefix('user/applicant')->name('user.appl
     Route::get('/dashboard', [DashboardController::class, 'applicant'])->name('dashboard');
      Route::get('/dashboard/overview', [CareerDashboardController::class, 'index'])->name('dashboard.overview');
 
+
+
     Route::view('/loading_count_down', 'loading_count_down');
 
     // Full resource routes for all applicant-related models
@@ -53,4 +56,16 @@ Route::middleware(['auth', 'role:4'])->prefix('user/applicant')->name('user.appl
     Route::resource('certifications', ApplicantCertificationController::class);
         Route::get('voluntary_disclosures/edit', [VoluntaryDisclosureController::class, 'edit'])->name('voluntary_disclosures.edit');
     Route::put('voluntary_disclosures', [VoluntaryDisclosureController::class, 'update'])->name('voluntary_disclosures.update');
+
+
+// Full resource route for Overview of an applicant
+     Route::get('/overviews', [OverviewController::class, 'index'])->name('overviews.index');
+
+
+
+
+
+
+
+
 });
