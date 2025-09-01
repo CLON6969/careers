@@ -12,6 +12,12 @@
             <input type="text" name="title" class="form-control" required>
         </div>
 
+<div class="mb-3">
+    <label>Home URL</label>
+    <input type="text" name="home_url" class="form-control" placeholder="https://example.com">
+</div>
+
+
         <div class="mb-3">
             <label>Picture</label>
             <input type="file" name="picture" class="form-control">

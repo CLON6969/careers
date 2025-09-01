@@ -13,6 +13,13 @@
             <input type="text" name="title" class="form-control" value="{{ old('title', $logo->title) }}" required>
         </div>
 
+
+    <div class="mb-3">
+    <label>Home URL</label>
+    <input type="text" name="home_url" class="form-control" value="{{ old('home_url', $logo->home_url) }}" placeholder="https://example.com">
+    </div>
+
+
         <div class="mb-3">
             <label>Picture</label><br>
             @if($logo->picture)

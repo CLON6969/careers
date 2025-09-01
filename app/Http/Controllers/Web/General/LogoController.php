@@ -26,9 +26,12 @@ class LogoController extends Controller
             'picture2' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'background_picture' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:11048',
             'title' => 'required|string|max:255',
+            'home_url' => 'nullable|url|max:255', 
         ]);
 
-        $data = $request->only(['title']);
+        $data = $request->only(['title', 'home_url']); // includes home_url
+        // handle images as before
+       Logo::create($data);
 
         if ($request->hasFile('picture')) {
             $path = $request->file('picture')->store('uploads/pics', 'public');
@@ -62,9 +65,11 @@ class LogoController extends Controller
             'picture2' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'background_picture' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:11048',
             'title' => 'required|string|max:255',
+            'home_url' => 'nullable|url|max:255', 
         ]);
 
-        $data = $request->only(['title']);
+     $data = $request->only(['title', 'home_url']); // includes home_url
+    $logo->update($data);
 
         if ($request->hasFile('picture')) {
             $path = $request->file('picture')->store('uploads/pics', 'public');
